@@ -1,9 +1,9 @@
 include demo_service
-$ha = true
+demo_service::definition { "test" :}
 
-demo_service::demo_def { "test" :}
+$ha_mode = true
 
-if $ha {
+if $ha_mode {
 
   class { 'corosync':
     enable_secauth    => false,
@@ -27,11 +27,7 @@ if $ha {
   Cs_property<||> ->
   Cs_primitive<||>
 
-  # individual inherit method
-  include demo_service_inherit
-  demo_service_inherit::demo_def { 'test' :}
-  # ha override definition method
-  # service_ha_override { 'nginx' :}
-  # service_ha_override::demo_def { 'test' :}
+  include demo_service_ha
+  demo_service_ha::definition { 'test' :}
 
 }
